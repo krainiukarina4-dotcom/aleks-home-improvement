@@ -44,14 +44,413 @@ footer{background:#111;color:#888;text-align:center;padding:25px}
 @media(max-width:1000px){.services-grid{grid-template-columns:repeat(2,1fr)}.gallery-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){
 header{position:relative;flex-direction:column;gap:15px;padding:12px 5%}nav{flex-wrap:wrap;justify-content:center;gap:13px}nav a{font-size:12px}.hero{min-height:90vh}
-section:not(.hero):not(.contact){padding:70px 5%}.services-grid,.gallery-grid,.ba-images{grid-template-columns:1fr}
+section:not(.hero):not(.contact){padding:70px 5%}.services-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.ba-images{grid-template-columns:1fr 1fr}
 .ba-image{aspect-ratio:16/9}.slider-arrow{width:45px;height:45px;font-size:22px}.ba-prev,.review-prev{left:8px}.ba-next,.review-next{right:8px}.review-card{padding:30px 25px}.lightbox-arrow{width:45px;height:45px;font-size:22px}.lightbox-left{left:8px}.lightbox-right{right:8px}.lightbox-close{top:5px;right:10px;font-size:40px}.contact h2{font-size:32px}
 }
 button,a,.gallery-item,.ba-image{-webkit-tap-highlight-color:transparent}
+
+/* =========================
+   EXTRA POLISH & ANIMATIONS
+========================= */
+
+/* Smooth page feel */
+html{scroll-behavior:smooth}
+body{min-width:320px}
+
+/* Header glass effect */
+header{transition:background .35s ease,box-shadow .35s ease,transform .35s ease}
+header.scrolled{background:rgba(12,12,12,.98);box-shadow:0 8px 35px rgba(0,0,0,.38)}
+
+/* Animated gold line under navigation */
+nav a{position:relative;padding:7px 0}
+nav a:after{content:"";position:absolute;left:50%;bottom:0;width:0;height:2px;background:#d6b35a;transform:translateX(-50%);transition:width .3s ease}
+nav a:hover:after,nav a.active:after{width:100%}
+
+/* Hero animation layers */
+.hero{position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-8%;background:inherit;animation:heroZoom 14s ease-in-out infinite alternate;z-index:0}
+.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(214,179,90,.12),transparent 45%);pointer-events:none;animation:heroGlow 5s ease-in-out infinite}
+.hero-content{position:relative;z-index:2}
+.hero h1{animation:titleFloat 4s ease-in-out infinite}
+.hero p{animation:fadeUp .9s .25s both}
+.hero-buttons{animation:fadeUp .9s .45s both}
+.button{position:relative;overflow:hidden}
+.button:before{content:"";position:absolute;top:0;left:-120%;width:70%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);transform:skewX(-20deg);transition:left .7s ease}
+.button:hover:before{left:140%}
+
+/* Section headings */
+.section-heading h2{position:relative}
+.section-heading h2:after{animation:goldPulse 2.5s ease-in-out infinite}
+
+/* Service cards */
+.service{position:relative;overflow:hidden}
+.service:before{content:"";position:absolute;inset:0;border:1px solid transparent;border-radius:14px;transition:.35s}
+.service:hover:before{border-color:rgba(201,162,77,.45)}
+.service-icon{display:inline-block;transition:transform .45s ease}
+.service:hover .service-icon{transform:translateY(-7px) rotate(-5deg) scale(1.12)}
+
+/* Our Work: requested 1:1 */
+.gallery-grid{grid-template-columns:repeat(4,1fr)}
+.gallery-item{aspect-ratio:1/1;box-shadow:0 8px 22px rgba(0,0,0,.07);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease}
+.gallery-item img{transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .5s ease}
+.gallery-item:hover{transform:translateY(-9px) scale(1.015);box-shadow:0 22px 45px rgba(0,0,0,.18)}
+.gallery-item:hover img{transform:scale(1.1);filter:saturate(1.08)}
+.gallery-item:after{backdrop-filter:blur(4px)}
+
+/* Staggered gallery entrance */
+.gallery-item{opacity:0;transform:translateY(30px) scale(.96)}
+.gallery-item.gallery-visible{opacity:1;transform:translateY(0) scale(1)}
+.gallery-item.gallery-visible:hover{transform:translateY(-9px) scale(1.015)}
+
+/* Before/After cards */
+.ba-card{transition:transform .5s ease,box-shadow .5s ease}
+.ba-card:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(0,0,0,.13)}
+.ba-image:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(214,179,90,.12),transparent 50%);opacity:0;transition:.4s;pointer-events:none}
+.ba-image:hover:after{opacity:1}
+
+/* Reviews */
+.review-card{transition:transform .5s ease,box-shadow .5s ease}
+.review-card:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(0,0,0,.13)}
+.review-avatar{animation:avatarFloat 3.5s ease-in-out infinite}
+
+/* Slider arrows */
+.slider-arrow{box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.slider-arrow:hover{box-shadow:0 12px 30px rgba(201,162,77,.3)}
+
+/* Scroll reveal directions */
+.fade-in{opacity:0;transform:translateY(55px) scale(.985);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.8,.2,1)}
+.fade-in.visible{opacity:1;transform:translateY(0) scale(1)}
+
+/* Contact */
+.contact{position:relative;overflow:hidden}
+.contact:after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;right:-120px;top:-120px;background:rgba(214,179,90,.12);animation:orb 7s ease-in-out infinite}
+.contact>*{position:relative;z-index:2}
+
+/* Lightbox */
+.lightbox-content img{box-shadow:0 25px 80px rgba(0,0,0,.5)}
+.lightbox-arrow{transition:transform .3s ease,background .3s ease,color .3s ease}
+.lightbox-arrow:hover{transform:translateY(-50%) scale(1.1)}
+
+/* Keyframes */
+@keyframes heroZoom{0%{transform:scale(1)}100%{transform:scale(1.08)}}
+@keyframes heroGlow{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.8;transform:scale(1.08)}}
+@keyframes titleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes goldPulse{0%,100%{box-shadow:0 0 0 rgba(201,162,77,0)}50%{box-shadow:0 0 18px rgba(201,162,77,.3)}}
+@keyframes avatarFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes orb{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-25px,20px) scale(1.15)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Better tablet spacing */
+@media(max-width:1000px){
+  header{padding-left:4%;padding-right:4%}
+  nav{gap:16px}
+  nav a{font-size:13px}
+  .gallery-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* =========================
+   PHONE: CLEAN, SPACED LAYOUT
+========================= */
+.mobile-menu-button{display:none}
+
+@media(max-width:650px){
+  header{
+    position:fixed;
+    min-height:68px;
+    height:auto;
+    flex-direction:row;
+    gap:10px;
+    padding:9px 16px;
+  }
+  .logo{gap:8px}
+  .logo-icon{width:43px;height:43px;border-radius:11px}
+  .logo-icon svg{width:31px}
+  .logo-title{font-size:16px}
+  .logo-subtitle{font-size:8px;letter-spacing:1.4px}
+
+  .mobile-menu-button{
+    display:flex;
+    width:44px;height:44px;
+    flex:0 0 44px;
+    align-items:center;justify-content:center;
+    border:1px solid rgba(214,179,90,.45);
+    border-radius:10px;
+    background:rgba(255,255,255,.05);
+    color:#fff;
+    cursor:pointer;
+    font-size:22px;
+    transition:.3s;
+  }
+  .mobile-menu-button:hover{background:#d6b35a;color:#111}
+
+  nav{
+    position:absolute;
+    top:100%;
+    left:12px;
+    right:12px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    padding:8px;
+    border-radius:15px;
+    background:rgba(18,18,18,.98);
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+    transform:translateY(-10px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:.3s ease;
+  }
+  nav.open{
+    transform:translateY(0);
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  nav a{
+    width:100%;
+    text-align:center;
+    padding:12px 8px;
+    border-radius:9px;
+    font-size:13px;
+  }
+  nav a:hover{background:rgba(214,179,90,.12)}
+  nav a:after{display:none}
+
+  .hero{
+    min-height:100svh;
+    padding:110px 18px 55px;
+  }
+  .hero h1{font-size:clamp(38px,12vw,58px);margin-bottom:18px}
+  .hero p{font-size:16px;line-height:1.6;margin:0 auto 27px;max-width:360px}
+  .hero-buttons{gap:10px}
+  .button{padding:13px 19px;font-size:14px}
+
+  section:not(.hero):not(.contact){padding:70px 17px}
+  .section-heading{margin-bottom:35px}
+  .section-heading h2{font-size:32px}
+  .section-heading p{font-size:14px;line-height:1.5}
+
+  .services-grid{grid-template-columns:1fr;gap:16px}
+  .service{padding:28px 20px;border-radius:16px}
+  .service h3{font-size:20px}
+  .service p{font-size:14px}
+
+  .before-after-slider,.reviews-slider{width:100%}
+  .ba-slide{padding:4px}
+  .ba-card{padding:12px;border-radius:15px}
+  .ba-images{grid-template-columns:1fr 1fr;gap:7px}
+  .ba-image{aspect-ratio:1/1;border-radius:9px}
+  .ba-card h3{font-size:20px;margin-top:15px}
+  .ba-card p{font-size:13px;line-height:1.55}
+
+  /* Our Work remains square on phone */
+  .gallery-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;
+  }
+  .gallery-item{
+    aspect-ratio:1/1;
+    border-radius:11px;
+  }
+  .gallery-item:after{
+    content:"View";
+    padding:7px 10px;
+    font-size:11px;
+  }
+
+  .slider-arrow{
+    width:42px;height:42px;font-size:20px;
+  }
+  .ba-prev,.review-prev{left:5px}
+  .ba-next,.review-next{right:5px}
+
+  .review-slide{padding:5px}
+  .review-card{padding:28px 18px;border-radius:15px}
+  .review-text{font-size:15px;line-height:1.65}
+
+  .contact{padding:75px 18px}
+  .contact h2{font-size:31px;line-height:1.15}
+  .contact p{font-size:14px;line-height:1.6}
+  .phone-number{font-size:21px}
+
+  .lightbox-content{max-width:94vw}
+  .lightbox-content img{max-width:94vw;max-height:72vh}
+  .lightbox-close{font-size:38px}
+}
+
+/* Reduce motion for users who request it */
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+
+/* =========================
+   MORE PREMIUM ANIMATIONS
+========================= */
+
+/* Scroll progress bar */
+#scrollProgress{
+  position:fixed;
+  top:0;
+  left:0;
+  width:0%;
+  height:3px;
+  background:linear-gradient(90deg,#a77b22,#f0d27b,#c9a24d);
+  z-index:10000;
+  box-shadow:0 0 12px rgba(214,179,90,.65);
+}
+
+/* Floating decorative particles */
+.hero-particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(214,179,90,.65);
+  box-shadow:0 0 15px rgba(214,179,90,.55);
+  pointer-events:none;
+  z-index:1;
+  animation:particleFloat 7s ease-in-out infinite;
+}
+.hero-particle.p1{left:12%;top:25%;animation-delay:-1s}
+.hero-particle.p2{left:24%;top:70%;width:4px;height:4px;animation-delay:-4s}
+.hero-particle.p3{right:18%;top:30%;width:5px;height:5px;animation-delay:-2s}
+.hero-particle.p4{right:30%;top:75%;width:3px;height:3px;animation-delay:-5s}
+.hero-particle.p5{left:52%;top:18%;width:4px;height:4px;animation-delay:-3s}
+
+/* Shimmer over section headings */
+.section-heading h2{
+  background:linear-gradient(90deg,#222 0%,#222 38%,#d6b35a 50%,#222 62%,#222 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:headingShimmer 6s ease-in-out infinite;
+}
+
+/* Cards get a soft spotlight */
+.service:after,.gallery-item:before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(214,179,90,.18),transparent 68%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .35s ease;
+  left:var(--mx,50%);
+  top:var(--my,50%);
+  transform:translate(-50%,-50%);
+}
+.service:hover:after,.gallery-item:hover:before{opacity:1}
+
+/* Gallery image shine */
+.gallery-item{
+  overflow:hidden;
+}
+.gallery-item:after{
+  transition:opacity .35s ease,transform .35s ease;
+}
+.gallery-item:hover:after{
+  transform:translate(-50%,-50%) scale(1.05);
+}
+
+/* Before/After labels gently pulse */
+.ba-label{
+  animation:labelPulse 2.8s ease-in-out infinite;
+}
+
+/* Buttons have a small floating motion */
+.hero-buttons .button:first-child{
+  animation:buttonFloat 3s ease-in-out infinite;
+}
+.hero-buttons .button:nth-child(2){
+  animation:buttonFloat 3s 1s ease-in-out infinite;
+}
+
+/* Footer reveal */
+footer{
+  position:relative;
+  overflow:hidden;
+}
+footer:before{
+  content:"";
+  position:absolute;
+  left:-20%;
+  top:0;
+  width:40%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#d6b35a,transparent);
+  animation:footerSweep 5s linear infinite;
+}
+
+/* Lightbox background glow */
+.lightbox:before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(214,179,90,.09),transparent 65%);
+  animation:lightboxGlow 5s ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* Active nav has a tiny glow */
+nav a.active{
+  text-shadow:0 0 12px rgba(214,179,90,.35);
+}
+
+/* Keyframes */
+@keyframes particleFloat{
+  0%,100%{transform:translate3d(0,0,0);opacity:.25}
+  25%{transform:translate3d(18px,-28px,0);opacity:.9}
+  50%{transform:translate3d(-8px,-52px,0);opacity:.35}
+  75%{transform:translate3d(-24px,-22px,0);opacity:.8}
+}
+@keyframes headingShimmer{
+  0%,65%,100%{background-position:200% 0}
+  78%{background-position:-20% 0}
+}
+@keyframes labelPulse{
+  0%,100%{box-shadow:0 0 0 rgba(214,179,90,0)}
+  50%{box-shadow:0 0 16px rgba(214,179,90,.25)}
+}
+@keyframes buttonFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes footerSweep{
+  0%{left:-30%}
+  100%{left:110%}
+}
+@keyframes lightboxGlow{
+  0%,100%{transform:scale(.9);opacity:.35}
+  50%{transform:scale(1.15);opacity:.8}
+}
+
+/* Keep motion comfortable on small screens */
+@media(max-width:650px){
+  .hero-particle{display:none}
+  .section-heading h2{background:none;-webkit-text-fill-color:initial}
+  .hero-buttons .button{animation:none}
+}
+
 </style>
 </head>
 
 <body>
+
+<div id="scrollProgress"></div>
+
+<div class="hero-particle p1"></div>
+<div class="hero-particle p2"></div>
+<div class="hero-particle p3"></div>
+<div class="hero-particle p4"></div>
+<div class="hero-particle p5"></div>
+
 
 <header>
 <a href="#home" class="logo">
@@ -65,6 +464,7 @@ button,a,.gallery-item,.ba-image{-webkit-tap-highlight-color:transparent}
 </div>
 <div><div class="logo-title">ALEKS</div><div class="logo-subtitle">Home Improvement</div></div>
 </a>
+<button class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu" aria-expanded="false">☰</button>
 <nav>
 <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#beforeafter">Before & After</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
 </nav>
@@ -316,6 +716,111 @@ const difference=reviewTouchStart-e.changedTouches[0].screenX;
 if(Math.abs(difference)>50)changeReview(difference>0?1:-1);
 },{passive:true});
 
+
+/* =========================
+   MOBILE MENU + EXTRA MOTION
+========================= */
+const mobileMenuButton=document.getElementById("mobileMenuButton");
+const nav=document.querySelector("nav");
+
+function closeMobileMenu(){
+  if(!nav)return;
+  nav.classList.remove("open");
+  if(mobileMenuButton){
+    mobileMenuButton.setAttribute("aria-expanded","false");
+    mobileMenuButton.textContent="☰";
+  }
+}
+if(mobileMenuButton){
+  mobileMenuButton.addEventListener("click",()=>{
+    const open=nav.classList.toggle("open");
+    mobileMenuButton.setAttribute("aria-expanded",String(open));
+    mobileMenuButton.textContent=open?"✕":"☰";
+  });
+}
+document.querySelectorAll("nav a").forEach(link=>{
+  link.addEventListener("click",closeMobileMenu);
+});
+document.addEventListener("click",e=>{
+  if(window.innerWidth<=650 && nav && mobileMenuButton && !nav.contains(e.target) && !mobileMenuButton.contains(e.target)){
+    closeMobileMenu();
+  }
+});
+
+const header=document.querySelector("header");
+window.addEventListener("scroll",()=>{
+  if(header)header.classList.toggle("scrolled",window.scrollY>25);
+},{passive:true});
+
+/* Stagger Our Work photos as they enter the page */
+const galleryObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      document.querySelectorAll(".gallery-item").forEach((item,index)=>{
+        setTimeout(()=>item.classList.add("gallery-visible"),index*55);
+      });
+      galleryObserver.disconnect();
+    }
+  });
+},{threshold:.08});
+const gallerySection=document.getElementById("gallery");
+if(gallerySection)galleryObserver.observe(gallerySection);
+
+
+/* =========================
+   EXTRA INTERACTION
+========================= */
+const scrollProgress=document.getElementById("scrollProgress");
+function updateScrollProgress(){
+  if(!scrollProgress)return;
+  const scrollTop=window.scrollY;
+  const height=document.documentElement.scrollHeight-window.innerHeight;
+  scrollProgress.style.width=(height>0?(scrollTop/height)*100:0)+"%";
+}
+window.addEventListener("scroll",updateScrollProgress,{passive:true});
+updateScrollProgress();
+
+/* Highlight the navigation item for the section currently on screen */
+const navLinks=[...document.querySelectorAll("nav a")];
+const pageSections=navLinks
+  .map(link=>document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+const navObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(link=>link.classList.remove("active"));
+      const active=navLinks.find(link=>link.getAttribute("href")==="#"+entry.target.id);
+      if(active)active.classList.add("active");
+    }
+  });
+},{rootMargin:"-35% 0px -55% 0px",threshold:0});
+pageSections.forEach(section=>navObserver.observe(section));
+
+/* Mouse-follow spotlight on cards */
+document.querySelectorAll(".service,.gallery-item").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+    const rect=card.getBoundingClientRect();
+    card.style.setProperty("--mx",(e.clientX-rect.left)+"px");
+    card.style.setProperty("--my",(e.clientY-rect.top)+"px");
+  });
+});
+
+/* Tiny 3D tilt on desktop cards */
+if(window.matchMedia("(min-width:651px)").matches){
+  document.querySelectorAll(".service,.gallery-item,.ba-card,.review-card").forEach(card=>{
+    card.addEventListener("mousemove",e=>{
+      const rect=card.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width-.5;
+      const y=(e.clientY-rect.top)/rect.height-.5;
+      card.style.transform=`perspective(900px) rotateX(${(-y*3).toFixed(2)}deg) rotateY(${(x*3).toFixed(2)}deg) translateY(-4px)`;
+    });
+    card.addEventListener("mouseleave",()=>{
+      card.style.transform="";
+    });
+  });
+}
+
 const fadeElements=document.querySelectorAll(".fade-in");
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")});
@@ -327,3 +832,4 @@ setInterval(()=>{if(reviews.length>1)changeReview(1)},8000);
 </script>
 </body>
 </html>
+
